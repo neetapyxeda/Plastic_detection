@@ -13,7 +13,7 @@ def make_predictions(image_path, model_path):
 
         # Extract the first detection result
         if results:
-            detection = results[0]
+            detection = results
             return detection
         else:
             return None
@@ -55,7 +55,7 @@ def run_app():
                 st.subheader("Detection Result")
                 if mask_response:
                     # Assuming `mask_response` has an image-like output
-                    st.image(mask_response.imgs[0], use_column_width=True)
+                    st.image(mask_response, use_column_width=True)
                 else:
                     st.error("Error Getting Predictions", icon="🚨")
 

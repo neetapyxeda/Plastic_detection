@@ -49,13 +49,13 @@ def run_app():
 
             with col1:
                 st.subheader("Original Image")
-                st.image(image, use_column_width=True)
+                st.image(image)
 
             with col2:
                 st.subheader("Detection Result")
                 if mask_response:
                     # Assuming `mask_response` has an image-like output
-                    st.image(mask_response, use_column_width=True)
+                    st.image(mask_response)
                 else:
                     st.error("Error Getting Predictions", icon="🚨")
 

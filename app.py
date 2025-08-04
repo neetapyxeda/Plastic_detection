@@ -20,6 +20,7 @@ def make_predictions(image_path, MODEL_NAME):
         print(str(error))
 
         return False
+    return results
 
 
 def run_app():
@@ -57,7 +58,7 @@ def run_app():
             with col2:
                 st.subheader("Mask")
                 if mask_response:
-                    st.image(PRED_MOVE_NAME)
+                    st.image(mask_response)
                 else:
                     st.error("Error Getting Predictions", icon="🚨")
 

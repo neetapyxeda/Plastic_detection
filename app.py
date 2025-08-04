@@ -6,7 +6,7 @@ import shutil
 from ultralytics import YOLO
 import streamlit as st
 
-def make_predictions(image_path, MODEL_NAME):
+def make_predictions(image_path, model_path):
     # load the yolo model
     yolo_model = YOLO(MODEL_NAME)
     results = yolo_model.predict(image_path, save = True)
@@ -16,7 +16,7 @@ def make_predictions(image_path, MODEL_NAME):
 def run_app():
     # constants
     IMAGE_NAME = "uploaded.png"
-    MODEL_NAME = "best.pt"
+    model_path = "/workspaces/Plastic_detection/best.pt"
     IMAGE_ADDRESS = "https://www.oecd.org/content/dam/oecd/en/publications/reports/2024/10/policy-scenarios-for-eliminating-plastic-pollution-by-2040_28eb9536/76400890-en.jpg"
     
     # UI
@@ -36,7 +36,7 @@ def run_app():
 
         # get predictions
         with st.spinner("Getting Predictions......"):
-            mask_response = make_predictions(IMAGE_NAME,MODEL_NAME)
+            mask_response = make_predictions(IMAGE_NAME,model_path)
             col1, col2 = st.columns(2)
 
             with col1:

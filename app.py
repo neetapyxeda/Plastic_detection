@@ -8,7 +8,7 @@ import streamlit as st
 
 def make_predictions(image_path, model_path):
     # load the yolo model
-    yolo_model = YOLO(MODEL_NAME)
+    yolo_model = YOLO(model_path)
     results = yolo_model.predict(image_path, save = True)
     return results
 

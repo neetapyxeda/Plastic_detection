@@ -1,25 +1,15 @@
 import streamlit as st
 from PIL import Image
 import numpy as np
-from model_utils import load_yolo_model
 import os
 import shutil
+from ultralytics import YOLO
+import streamlit as st
 
 def make_predictions(image_path, MODEL_NAME):
     # load the yolo model
-    yolo_model = load_yolo_model(MODEL_NAME)
+    yolo_model = YOLO(MODEL_NAME)
     results = yolo_model.predict(image_path, save = True)
-    try:
-        if os.path.exists(PRED_IMAGE_PATH):
-            shutil.move(PRED_IMAGE_PATH, PRED_MOVE_NAME)
-            os.rmdir(DIRECTORY)
-            return True
-        else:
-            return False
-    except Exception as error:
-        print(str(error))
-
-        return False
     return results
 
 
@@ -28,9 +18,7 @@ def run_app():
     IMAGE_NAME = "uploaded.png"
     MODEL_NAME = "best.pt"
     IMAGE_ADDRESS = "https://www.oecd.org/content/dam/oecd/en/publications/reports/2024/10/policy-scenarios-for-eliminating-plastic-pollution-by-2040_28eb9536/76400890-en.jpg"
-    PRED_IMAGE_PATH = "runs/segment/predict/uploaded.png"
-    DIRECTORY = "runs/segment/predict"
-    PRED_MOVE_NAME = "pred_image.png"
+    
     # UI
     st.title("Plastic Detection")
     st.image(IMAGE_ADDRESS, caption = "Plastic Detection")

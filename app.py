@@ -39,7 +39,7 @@ def run_app():
         # Open and save the uploaded file
         image = Image.open(uploaded_file)
         image.save(IMAGE_NAME)
-        st.image(image, caption='Uploaded Image.', use_column_width=True)
+        #st.image(image, caption='Uploaded Image.', use_column_width=True)
 
         # Get predictions with a spinner
         with st.spinner("Getting Predictions..."):
@@ -50,12 +50,12 @@ def run_app():
 
             with col1:
                 st.subheader("Original Image")
-                st.image(image, use_column_width=True)
+                st.image(image, use_container_width=True)
 
             with col2:
                 st.subheader("Detection Result")
                 if detection_image is not None:
-                    st.image(detection_image, caption='Detected Objects', use_column_width=True)
+                    st.image(detection_image, caption='Detected Objects', use_container_width=True)
                 else:
                     st.error("No detection results.", icon="🚨")
 

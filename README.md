@@ -1,1 +1,1 @@
-# Weed-Segments
+# Plastic detection

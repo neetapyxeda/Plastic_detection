@@ -5,7 +5,7 @@ from model_utils import load_yolo_model
 import os
 import shutil
 
-def make_predictions(image_path):
+def make_predictions(image_path, MODEL_NAME):
     # load the yolo model
     yolo_model = load_yolo_model(MODEL_NAME)
     results = yolo_model.predict(image_path, save = True)
@@ -25,7 +25,7 @@ def make_predictions(image_path):
 def run_app():
     # constants
     IMAGE_NAME = "uploaded.png"
-    MODEL_NAME = "sign_detection.pt"
+    MODEL_NAME = "best.pt"
     IMAGE_ADDRESS = "https://www.oecd.org/content/dam/oecd/en/publications/reports/2024/10/policy-scenarios-for-eliminating-plastic-pollution-by-2040_28eb9536/76400890-en.jpg"
     PRED_IMAGE_PATH = "runs/segment/predict/uploaded.png"
     DIRECTORY = "runs/segment/predict"
@@ -47,7 +47,7 @@ def run_app():
 
         # get predictions
         with st.spinner("Getting Predictions......"):
-            mask_response = make_predictions(IMAGE_NAME)
+            mask_response = make_predictions(IMAGE_NAME,MODEL_NAME)
             col1, col2 = st.columns(2)
 
             with col1:

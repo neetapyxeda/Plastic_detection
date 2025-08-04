@@ -13,7 +13,7 @@ def make_predictions(image_path, model_path):
 
         # Extract the first detection result
         if results:
-            detection = results
+            detection = results[0]
             return detection
         else:
             return None
@@ -24,7 +24,7 @@ def make_predictions(image_path, model_path):
 def run_app():
     # Constants
     IMAGE_NAME = "uploaded.png"
-    MODEL_PATH = "best.pt"
+    MODEL_PATH = "/workspaces/Plastic_detection/best.pt"
     IMAGE_ADDRESS = "https://www.oecd.org/content/dam/oecd/en/publications/reports/2024/10/policy-scenarios-for-eliminating-plastic-pollution-by-2040_28eb9536/76400890-en.jpg"
 
     # UI
@@ -49,13 +49,13 @@ def run_app():
 
             with col1:
                 st.subheader("Original Image")
-                st.image(image)
+                st.image(image, use_column_width=True)
 
             with col2:
                 st.subheader("Detection Result")
                 if mask_response:
                     # Assuming `mask_response` has an image-like output
-                    st.image(mask_response)
+                    st.image(mask_response.imgs[0], use_column_width=True)
                 else:
                     st.error("Error Getting Predictions", icon="🚨")
 

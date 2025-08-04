@@ -60,3 +60,5 @@ def run_app():
                     st.image(PRED_MOVE_NAME)
                 else:
                     st.error("Error Getting Predictions", icon="🚨")
+
+run_app()                    

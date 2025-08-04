@@ -1,20 +1,21 @@
 import streamlit as st
 from PIL import Image
 from ultralytics import YOLO
-import os
 
 def make_predictions(image_path, model_path):
     try:
         # Load the YOLO model
         yolo_model = YOLO(model_path)
 
-        # Perform prediction; setting save=False to avoid saving files
-        results = yolo_model.predict(image_path, save=False)
+        # Perform prediction
+        results = yolo_model.predict(image_path)
 
-        # Extract the first detection result
+        # Extract the first detection result for this image
         if results:
-            detection = results[0]
-            return detection
+            # The results object should have a method or property to output the plotted image
+            # Check if 'plot' or similar is provided to illustrate detections
+            detection_image = results[0].plot()  # Adjust if function calls are different
+            return detection_image
         else:
             return None
     except Exception as e:
@@ -34,17 +35,17 @@ def run_app():
     # File uploader widget
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
-    # Check if a file has been uploaded
     if uploaded_file is not None:
-        # Open and save the uploaded file using PIL
+        # Open and save the uploaded file
         image = Image.open(uploaded_file)
         image.save(IMAGE_NAME)
+        st.image(image, caption='Uploaded Image.', use_column_width=True)
 
         # Get predictions with a spinner
         with st.spinner("Getting Predictions..."):
-            mask_response = make_predictions(IMAGE_NAME, MODEL_PATH)
+            detection_image = make_predictions(IMAGE_NAME, MODEL_PATH)
 
-            # Display images and results
+            # Display original image and detection results
             col1, col2 = st.columns(2)
 
             with col1:
@@ -53,11 +54,10 @@ def run_app():
 
             with col2:
                 st.subheader("Detection Result")
-                if mask_response:
-                    # Assuming `mask_response` has an image-like output
-                    st.image(mask_response.imgs[0], use_column_width=True)
+                if detection_image is not None:
+                    st.image(detection_image, caption='Detected Objects', use_column_width=True)
                 else:
-                    st.error("Error Getting Predictions", icon="🚨")
+                    st.error("No detection results.", icon="🚨")
 
 if __name__ == "__main__":
     run_app()
